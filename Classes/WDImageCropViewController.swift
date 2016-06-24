@@ -9,11 +9,11 @@
 import UIKit
 import CoreGraphics
 
-internal protocol WDImageCropControllerDelegate {
+protocol WDImageCropControllerDelegate {
     func imageCropController(imageCropController: WDImageCropViewController, didFinishWithCroppedImage croppedImage: UIImage)
 }
 
-internal class WDImageCropViewController: UIViewController {
+class WDImageCropViewController: UIViewController {
     var sourceImage: UIImage!
     var delegate: WDImageCropControllerDelegate?
     var cropSize: CGSize!
