@@ -14,10 +14,10 @@ import CoreGraphics
 }
 
 @objc public class WDImageCropViewController: UIViewController {
-    var sourceImage: UIImage!
-    var delegate: WDImageCropControllerDelegate?
-    var cropSize: CGSize!
-    var resizableCropArea = false
+    public var sourceImage: UIImage!
+    public var delegate: WDImageCropControllerDelegate?
+    public var cropSize: CGSize!
+    public var resizableCropArea = false
 
     private var croppedImage: UIImage!
 
