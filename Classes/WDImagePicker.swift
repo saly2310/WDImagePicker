@@ -54,7 +54,7 @@ import UIKit
         picker.pushViewController(cropController, animated: true)
     }
 
-    func imageCropController(imageCropController: WDImageCropViewController, didFinishWithCroppedImage croppedImage: UIImage) {
+    public func imageCropController(imageCropController: WDImageCropViewController, didFinishWithCroppedImage croppedImage: UIImage) {
         self.delegate?.imagePicker?(self, pickedImage: croppedImage)
     }
 }

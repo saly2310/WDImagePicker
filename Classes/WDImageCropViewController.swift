@@ -26,7 +26,7 @@ import CoreGraphics
     private var useButton: UIButton!
     private var cancelButton: UIButton!
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
 
         self.automaticallyAdjustsScrollViewInsets = false
@@ -44,7 +44,7 @@ import CoreGraphics
         }
     }
 
-    override func viewWillLayoutSubviews() {
+    override public func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
         self.imageCropView.frame = self.view.bounds
