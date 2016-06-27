@@ -57,4 +57,8 @@ import UIKit
     public func imageCropController(imageCropController: WDImageCropViewController, didFinishWithCroppedImage croppedImage: UIImage) {
         self.delegate?.imagePicker?(self, pickedImage: croppedImage)
     }
+    public func imageCropControllerDidCancel(imageCropController:WDImageCropViewController){
+        
+    }
+
 }

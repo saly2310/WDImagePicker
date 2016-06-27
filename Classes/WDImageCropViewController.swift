@@ -11,6 +11,7 @@ import CoreGraphics
 
 @objc public protocol WDImageCropControllerDelegate {
     func imageCropController(imageCropController: WDImageCropViewController, didFinishWithCroppedImage croppedImage: UIImage)
+    func imageCropControllerDidCancel(imageCropController:WDImageCropViewController)
 }
 
 @objc public class WDImageCropViewController: UIViewController {
@@ -54,6 +55,7 @@ import CoreGraphics
 
     func actionCancel(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
+        self.delegate?.imageCropControllerDidCancel(self)
     }
 
     func actionUse(sender: AnyObject) {
