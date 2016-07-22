@@ -220,13 +220,28 @@ internal class WDImageCropView: UIView, UIScrollViewDelegate {
         if cropSize.width == cropSize.height {
             scale = max(scaleWidth, scaleHeight)
         } else if cropSize.width > cropSize.height {
+            /*
             scale = imageToCrop!.size.width < imageToCrop!.size.height ?
                 max(scaleWidth, scaleHeight) :
                 min(scaleWidth, scaleHeight)
+ */
+            if imageToCrop.size.width < imageToCrop.size.height {
+                scale = max(scaleWidth,scaleHeight)
+            }else{
+                scale = min(scaleWidth,scaleHeight)
+            }
         } else {
+            /*
             scale = imageToCrop!.size.width < imageToCrop!.size.height ?
                 min(scaleWidth, scaleHeight) :
                 max(scaleWidth, scaleHeight)
+ */
+            if imageToCrop.size.width < imageToCrop.size.height {
+                scale = min(scaleWidth,scaleHeight)
+            }else{
+                scale = max(scaleWidth,scaleHeight)
+            }
+            
         }
 
         // extract visible rect from scrollview and scale it
