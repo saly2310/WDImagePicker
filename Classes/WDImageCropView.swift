@@ -225,7 +225,7 @@ internal class WDImageCropView: UIView, UIScrollViewDelegate {
                 max(scaleWidth, scaleHeight) :
                 min(scaleWidth, scaleHeight)
  */
-            if imageToCrop.size.width < imageToCrop.size.height {
+            if imageToCrop!.size.width < imageToCrop!.size.height {
                 scale = max(scaleWidth,scaleHeight)
             }else{
                 scale = min(scaleWidth,scaleHeight)
@@ -236,7 +236,7 @@ internal class WDImageCropView: UIView, UIScrollViewDelegate {
                 min(scaleWidth, scaleHeight) :
                 max(scaleWidth, scaleHeight)
  */
-            if imageToCrop.size.width < imageToCrop.size.height {
+            if imageToCrop!.size.width < imageToCrop!.size.height {
                 scale = min(scaleWidth,scaleHeight)
             }else{
                 scale = max(scaleWidth,scaleHeight)
