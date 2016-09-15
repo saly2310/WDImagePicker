@@ -190,8 +190,17 @@ internal class WDImageCropView: UIView, UIScrollViewDelegate {
         let imageRef = CGImageCreateWithImageInRect(imageToCrop!.CGImage, visibleRect)
         let result = UIImage(CGImage: imageRef!, scale: imageToCrop!.scale,
             orientation: imageToCrop!.imageOrientation)
+        
+        //Sa add code
+        UIGraphicsBeginImageContextWithOptions(result.size, false, result.scale);
+        let rect = CGRect(x: 0, y: 0, width: result.size.width, height: result.size.height)
+        
+        result.drawInRect(rect)
+        
+        let normalizedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext();
+        return normalizedImage;
 
-        return result
     }
 
     private func calcVisibleRectForResizeableCropArea() -> CGRect {
