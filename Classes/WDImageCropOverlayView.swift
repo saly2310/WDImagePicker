@@ -16,23 +16,23 @@ internal class WDImageCropOverlayView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.backgroundColor = UIColor.clearColor()
-        self.userInteractionEnabled = true
+        self.backgroundColor = UIColor.clear
+        self.isUserInteractionEnabled = true
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
-        self.backgroundColor = UIColor.clearColor()
-        self.userInteractionEnabled = true
+        self.backgroundColor = UIColor.clear
+        self.isUserInteractionEnabled = true
     }
 
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
 
-        let toolbarSize = CGFloat(UIDevice.currentDevice().userInterfaceIdiom == .Pad ? 0 : 54)
+        let toolbarSize = CGFloat(UIDevice.current.userInterfaceIdiom == .pad ? 0 : 54)
 
-        let width = CGRectGetWidth(self.frame)
-        let height = CGRectGetHeight(self.frame) - toolbarSize
+        let width = self.frame.width
+        let height = self.frame.height - toolbarSize
 
         let heightSpan = floor(height / 2 - self.cropSize.height / 2)
         let widthSpan = floor(width / 2 - self.cropSize.width / 2)
@@ -43,11 +43,11 @@ internal class WDImageCropOverlayView: UIView {
 
         // fill inner border
         UIColor(red: 1, green: 1, blue: 1, alpha: 0.5).set()
-        UIRectFrame(CGRectMake(widthSpan - 2, heightSpan - 2, self.cropSize.width + 4,
-            self.cropSize.height + 4))
+        UIRectFrame(CGRect(x: widthSpan - 2, y: heightSpan - 2, width: self.cropSize.width + 4,
+            height: self.cropSize.height + 4))
 
         // fill inner rect
-        UIColor.clearColor().set()
-        UIRectFill(CGRectMake(widthSpan, heightSpan, self.cropSize.width, self.cropSize.height))
+        UIColor.clear.set()
+        UIRectFill(CGRect(x: widthSpan, y: heightSpan, width: self.cropSize.width, height: self.cropSize.height))
     }
 }

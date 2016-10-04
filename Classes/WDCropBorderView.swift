@@ -9,38 +9,37 @@
 import UIKit
 
 internal class WDCropBorderView: UIView {
-    private let kNumberOfBorderHandles: CGFloat = 8
-    private let kHandleDiameter: CGFloat = 24
+    fileprivate let kNumberOfBorderHandles: CGFloat = 8
+    fileprivate let kHandleDiameter: CGFloat = 24
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
     }
 
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()
 
-        CGContextSetStrokeColorWithColor(context,
-            UIColor(red: 1, green: 1, blue: 1, alpha: 0.5).CGColor)
-        CGContextSetLineWidth(context, 1.5)
-        CGContextAddRect(context, CGRectMake(kHandleDiameter / 2, kHandleDiameter / 2,
-            rect.size.width - kHandleDiameter, rect.size.height - kHandleDiameter))
-        CGContextStrokePath(context)
+        context?.setStrokeColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.5).cgColor)
+        context?.setLineWidth(1.5)
+        context?.addRect(CGRect(x: kHandleDiameter / 2, y: kHandleDiameter / 2,
+            width: rect.size.width - kHandleDiameter, height: rect.size.height - kHandleDiameter))
+        context?.strokePath()
 
-        CGContextSetRGBFillColor(context, 1, 1, 1, 0.95)
+        context?.setFillColor(red: 1, green: 1, blue: 1, alpha: 0.95)
         for handleRect in calculateAllNeededHandleRects() {
-            CGContextFillEllipseInRect(context, handleRect)
+            context?.fillEllipse(in: handleRect)
         }
     }
 
-    private func calculateAllNeededHandleRects() -> [CGRect] {
+    fileprivate func calculateAllNeededHandleRects() -> [CGRect] {
 
         let width = self.frame.width
         let height = self.frame.height
@@ -54,14 +53,14 @@ internal class WDCropBorderView: UIView {
         let middleRowY = bottomRowY / 2
 
         //starting with the upper left corner and then following clockwise
-        let topLeft = CGRectMake(leftColX, topRowY, kHandleDiameter, kHandleDiameter)
-        let topCenter = CGRectMake(centerColX, topRowY, kHandleDiameter, kHandleDiameter)
-        let topRight = CGRectMake(rightColX, topRowY, kHandleDiameter, kHandleDiameter)
-        let middleRight = CGRectMake(rightColX, middleRowY, kHandleDiameter, kHandleDiameter)
-        let bottomRight = CGRectMake(rightColX, bottomRowY, kHandleDiameter, kHandleDiameter)
-        let bottomCenter = CGRectMake(centerColX, bottomRowY, kHandleDiameter, kHandleDiameter)
-        let bottomLeft = CGRectMake(leftColX, bottomRowY, kHandleDiameter, kHandleDiameter)
-        let middleLeft = CGRectMake(leftColX, middleRowY, kHandleDiameter, kHandleDiameter)
+        let topLeft = CGRect(x: leftColX, y: topRowY, width: kHandleDiameter, height: kHandleDiameter)
+        let topCenter = CGRect(x: centerColX, y: topRowY, width: kHandleDiameter, height: kHandleDiameter)
+        let topRight = CGRect(x: rightColX, y: topRowY, width: kHandleDiameter, height: kHandleDiameter)
+        let middleRight = CGRect(x: rightColX, y: middleRowY, width: kHandleDiameter, height: kHandleDiameter)
+        let bottomRight = CGRect(x: rightColX, y: bottomRowY, width: kHandleDiameter, height: kHandleDiameter)
+        let bottomCenter = CGRect(x: centerColX, y: bottomRowY, width: kHandleDiameter, height: kHandleDiameter)
+        let bottomLeft = CGRect(x: leftColX, y: bottomRowY, width: kHandleDiameter, height: kHandleDiameter)
+        let middleLeft = CGRect(x: leftColX, y: middleRowY, width: kHandleDiameter, height: kHandleDiameter)
 
         return [topLeft, topCenter, topRight, middleRight, bottomRight, bottomCenter, bottomLeft,
             middleLeft]

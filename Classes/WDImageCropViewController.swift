@@ -10,24 +10,24 @@ import UIKit
 import CoreGraphics
 
 @objc public protocol WDImageCropControllerDelegate {
-    func imageCropController(imageCropController: WDImageCropViewController, didFinishWithCroppedImage croppedImage: UIImage)
-    func imageCropControllerDidCancel(imageCropController:WDImageCropViewController)
+    func imageCropController(_ imageCropController: WDImageCropViewController, didFinishWithCroppedImage croppedImage: UIImage)
+    func imageCropControllerDidCancel(_ imageCropController:WDImageCropViewController)
 }
 
-@objc public class WDImageCropViewController: UIViewController {
-    public var sourceImage: UIImage!
-    public var delegate: WDImageCropControllerDelegate?
-    public var cropSize: CGSize!
-    public var resizableCropArea = false
+@objc open class WDImageCropViewController: UIViewController {
+    open var sourceImage: UIImage!
+    open var delegate: WDImageCropControllerDelegate?
+    open var cropSize: CGSize!
+    open var resizableCropArea = false
 
-    private var croppedImage: UIImage!
+    fileprivate var croppedImage: UIImage!
 
-    private var imageCropView: WDImageCropView!
-    private var toolbar: UIToolbar!
-    private var useButton: UIButton!
-    private var cancelButton: UIButton!
+    fileprivate var imageCropView: WDImageCropView!
+    fileprivate var toolbar: UIToolbar!
+    fileprivate var useButton: UIButton!
+    fileprivate var cancelButton: UIButton!
 
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
 
         self.automaticallyAdjustsScrollViewInsets = false
@@ -38,39 +38,39 @@ import CoreGraphics
         self.setupCropView()
         self.setupToolbar()
 
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            self.navigationController?.navigationBarHidden = true
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            self.navigationController?.isNavigationBarHidden = true
         } else {
-            self.navigationController?.navigationBarHidden = false
+            self.navigationController?.isNavigationBarHidden = false
         }
     }
 
-    override public func viewWillLayoutSubviews() {
+    override open func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
         self.imageCropView.frame = self.view.bounds
-        self.toolbar?.frame = CGRectMake(0, CGRectGetHeight(self.view.frame) - 54,
-            self.view.frame.size.width, 54)
+        self.toolbar?.frame = CGRect(x: 0, y: self.view.frame.height - 54,
+            width: self.view.frame.size.width, height: 54)
     }
 
-    func actionCancel(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    func actionCancel(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
         self.delegate?.imageCropControllerDidCancel(self)
     }
 
-    func actionUse(sender: AnyObject) {
+    func actionUse(_ sender: AnyObject) {
         croppedImage = self.imageCropView.croppedImage()
         self.delegate?.imageCropController(self, didFinishWithCroppedImage: croppedImage)
     }
 
-    private func setupNavigationBar() {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel,
+    fileprivate func setupNavigationBar() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
                                                                 target: self, action: #selector(actionCancel))
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Use", style: .Plain,
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Use", style: .plain,
             target: self, action: #selector(actionUse))
     }
 
-    private func setupCropView() {
+    fileprivate func setupCropView() {
         self.imageCropView = WDImageCropView(frame: self.view.bounds)
         self.imageCropView.imageToCrop = sourceImage
         self.imageCropView.resizableCropArea = self.resizableCropArea
@@ -78,67 +78,67 @@ import CoreGraphics
         self.view.addSubview(self.imageCropView)
     }
 
-    private func setupCancelButton() {
+    fileprivate func setupCancelButton() {
         self.cancelButton = UIButton()
-        self.cancelButton.titleLabel?.font = UIFont.boldSystemFontOfSize(16)
-        self.cancelButton.titleLabel?.shadowOffset = CGSizeMake(0, -1)
-        self.cancelButton.frame = CGRectMake(0, 0, 58, 30)
-        self.cancelButton.setTitle("Cancel", forState: .Normal)
+        self.cancelButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        self.cancelButton.titleLabel?.shadowOffset = CGSize(width: 0, height: -1)
+        self.cancelButton.frame = CGRect(x: 0, y: 0, width: 58, height: 30)
+        self.cancelButton.setTitle("Cancel", for: UIControlState())
         self.cancelButton.setTitleShadowColor(
-            UIColor(red: 0.118, green: 0.247, blue: 0.455, alpha: 1), forState: .Normal)
-        self.cancelButton.addTarget(self, action: #selector(actionCancel), forControlEvents: .TouchUpInside)
+            UIColor(red: 0.118, green: 0.247, blue: 0.455, alpha: 1), for: UIControlState())
+        self.cancelButton.addTarget(self, action: #selector(actionCancel), for: .touchUpInside)
     }
 
-    private func setupUseButton() {
+    fileprivate func setupUseButton() {
         self.useButton = UIButton()
-        self.useButton.titleLabel?.font = UIFont.boldSystemFontOfSize(16)
-        self.useButton.titleLabel?.shadowOffset = CGSizeMake(0, -1)
-        self.useButton.frame = CGRectMake(0, 0, 58, 30)
-        self.useButton.setTitle("Use", forState: .Normal)
+        self.useButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        self.useButton.titleLabel?.shadowOffset = CGSize(width: 0, height: -1)
+        self.useButton.frame = CGRect(x: 0, y: 0, width: 58, height: 30)
+        self.useButton.setTitle("Use", for: UIControlState())
         self.useButton.setTitleShadowColor(
-            UIColor(red: 0.118, green: 0.247, blue: 0.455, alpha: 1), forState: .Normal)
-        self.useButton.addTarget(self, action: #selector(actionUse), forControlEvents: .TouchUpInside)
+            UIColor(red: 0.118, green: 0.247, blue: 0.455, alpha: 1), for: UIControlState())
+        self.useButton.addTarget(self, action: #selector(actionUse), for: .touchUpInside)
     }
 
-    private func toolbarBackgroundImage() -> UIImage {
+    fileprivate func toolbarBackgroundImage() -> UIImage {
         let components: [CGFloat] = [1, 1, 1, 1, 123.0 / 255.0, 125.0 / 255.0, 132.0 / 255.0, 1]
 
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 54), true, 0)
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 320, height: 54), true, 0)
 
         let context = UIGraphicsGetCurrentContext()
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let gradient = CGGradientCreateWithColorComponents(colorSpace, components, nil, 2)
+        let gradient = CGGradient(colorSpace: colorSpace, colorComponents: components, locations: nil, count: 2)
 
-        CGContextDrawLinearGradient(context, gradient, CGPointMake(0, 0), CGPointMake(0, 54), [])
+        context?.drawLinearGradient(gradient!, start: CGPoint(x: 0, y: 0), end: CGPoint(x: 0, y: 54), options: [])
 
         let viewImage = UIGraphicsGetImageFromCurrentImageContext()
 
         UIGraphicsEndImageContext()
 
-        return viewImage
+        return viewImage!
     }
 
-    private func setupToolbar() {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            self.toolbar = UIToolbar(frame: CGRectZero)
-            self.toolbar.translucent = true
-            self.toolbar.barStyle = .Black
+    fileprivate func setupToolbar() {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            self.toolbar = UIToolbar(frame: CGRect.zero)
+            self.toolbar.isTranslucent = true
+            self.toolbar.barStyle = .black
             self.view.addSubview(self.toolbar)
 
             self.setupCancelButton()
             self.setupUseButton()
 
-            let info = UILabel(frame: CGRectZero)
+            let info = UILabel(frame: CGRect.zero)
             info.text = ""
             info.textColor = UIColor(red: 0.173, green: 0.173, blue: 0.173, alpha: 1)
-            info.backgroundColor = UIColor.clearColor()
+            info.backgroundColor = UIColor.clear
             info.shadowColor = UIColor(red: 0.827, green: 0.731, blue: 0.839, alpha: 1)
-            info.shadowOffset = CGSizeMake(0, 1)
-            info.font = UIFont.boldSystemFontOfSize(18)
+            info.shadowOffset = CGSize(width: 0, height: 1)
+            info.font = UIFont.boldSystemFont(ofSize: 18)
             info.sizeToFit()
 
             let cancel = UIBarButtonItem(customView: self.cancelButton)
-            let flex = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+            let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
             let label = UIBarButtonItem(customView: info)
             let use = UIBarButtonItem(customView: self.useButton)
 
